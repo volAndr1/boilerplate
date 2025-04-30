@@ -1,9 +1,2 @@
-FROM nginx:stable-alpine
-
-WORKDIR /app
-
-COPY . .
-
-RUN cp -r /app/dist/* /usr/share/nginx/html
-
-EXPOSE 80
+FROM nginx:1.24-alpine
+COPY . /usr/share/nginx/html
