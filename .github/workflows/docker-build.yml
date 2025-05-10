@@ -1,4 +1,4 @@
-name: Build and Publish Frontend
+name: Checker
 
 on:
   push:
@@ -7,17 +7,16 @@ on:
       - feature/**
   workflow_dispatch:
 
-permissions:
-  packages: write
-  contents: read
 
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-
+    permissions:
+      packages: write
+      contents: read
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Install pnpm, dependencies, and build
         run: |
@@ -26,18 +25,14 @@ jobs:
           pnpm run build
 
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push Docker image
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io - u ${{ github.actor }} --password-stdin
+      
+      - name: Docker image...
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: ghcr.io/volandr1/boilerplate:latest
+          tags: ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:latest
 
       - name: Azure Login
         uses: azure/login@v2
