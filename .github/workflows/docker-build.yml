@@ -43,5 +43,5 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: <your_app_service_name>
+          app-name: WebAppMy-lab-9
           images: ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:latest
