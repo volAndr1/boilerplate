@@ -31,9 +31,9 @@ jobs:
       - name: Docker image...
         uses: docker/build-push-action@v5
         with:
-          context: .
-          push: true
-          tags: ghcr.io/${{ github.actor || 'volandr1' }}${{ '/' }}${{ github.event.repository.name }}:latest
+            context: .
+            push: true
+            tags: ghcr.io/volandr1/boilerplate:latest
 
       - name: Logging into Azure
         uses: azure/login@v2
