@@ -33,7 +33,7 @@ jobs:
         with:
             context: .
             push: true
-            tags: ghcr.io/volandr1/boilerplate:latest
+            tags: ghcr.io/volAndr1/boilerplate:latest
 
       - name: Logging into Azure
         uses: azure/login@v2
