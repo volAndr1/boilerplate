@@ -1,17 +1,11 @@
-# Этап сборки с node 18
-FROM node:18-alpine AS build
+FROM nginx:stable-alpine
+
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm
-RUN pnpm install
-
+# Копируем все файлы проекта в контейнер
 COPY . .
-RUN pnpm run build
 
-# Этап nginx для отдачи статики
-FROM nginx:1.24-alpine
-COPY --from=build /app/build /usr/share/nginx/html
+# Копируем содержимое папки dist в директорию nginx для отдачи статики
+RUN cp -r dist/* /usr/share/nginx/html/
 
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
