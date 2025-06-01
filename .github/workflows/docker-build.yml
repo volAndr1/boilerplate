@@ -33,7 +33,7 @@ jobs:
         with:
             context: .
             push: true
-            tags: ghcr.io/volAndr1/boilerplate:latest
+            tags: ghcr.io/volandr1/boilerplate:latest
 
       - name: Logging into Azure
         uses: azure/login@v2
@@ -43,5 +43,5 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: WebAppMy-lab-9
+          app-name: my-web-app-labb-9
           images: ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:latest
