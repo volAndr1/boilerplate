@@ -1,28 +1,20 @@
-Вот стилизованный отчет в формате **Markdown**, оформленный по примеру:
+## Завдання 1: Hello GitHub Actions & Publish Packages
 
----
-
-## Задание 1: Hello GitHub Actions & Publish Packages
-
-
-Я завершил практические задания **"Hello GitHub Actions"** и **"Publish Packages"** на GitHub Skills.
-Ссылки на репозитории:
+Я виконав практичні завдання **"Hello GitHub Actions"** та **"Publish Packages"** на [GitHub Skills](https://skills.github.com/). Посилання на репозиторії:
 
 * [Hello GitHub Actions](https://github.com/volandr1/github-actions)
 * [Publish Packages](https://github.com/volandr1/publish-packages)
 
 ---
 
-## Задание 2: Создание собственного GitHub Workflow
+## Завдання 2: Створення власного GitHub Workflow
 
+Я створив власний GitHub Workflow для збірки Docker-образу фронтенд-проєкту та завантаження його у GitHub Container Registry. Воркфлоу відповідає всім вимогам:
 
+### ✅ Тригери:
 
-Я создал собственный GitHub Workflow для сборки Docker-образа фронтенд-проекта и загрузки его в GitHub Container Registry. Воркфлоу соответствует следующим требованиям:
-
-### ✅ Триггеры:
-
-* `workflow_dispatch` (ручной запуск)
-* `push` в ветки:
+* `workflow_dispatch` — ручний запуск
+* `push` у гілки:
 
   * `main`
   * `feature/**`
@@ -68,16 +60,20 @@ jobs:
           tags: ghcr.io/${{ github.actor }}/boilerplate:latest
 ```
 
-### ✅ Что реализовано:
+### ✅ Реалізовано:
 
-* Репозиторий клонируется с помощью `actions/checkout@v3`
-* Установка `pnpm` и сборка проекта выполняются одной командой-скриптом
-* Авторизация в GitHub Container Registry производится с использованием `GITHUB_TOKEN` и `github.actor`
-* Docker-образ собирается и публикуется с тегом:
+* Репозиторій клоновано за допомогою `actions/checkout@v3`
+
+* Установлення `pnpm`, інсталяція залежностей та збірка проєкту виконуються єдиним скриптом
+
+* Авторизація у GitHub Container Registry реалізована через `GITHUB_TOKEN` та `github.actor`
+
+* Docker-образ збирається та публікується з тегом:
 
   ```
   ghcr.io/volandr1/boilerplate:latest
   ```
-* Образ успешно отображается на вкладке [Packages](https://github.com/users/volandr1/packages)
+
+* Образ успішно відображається у вкладці **Packages** у профілі GitHub
 
 ---
