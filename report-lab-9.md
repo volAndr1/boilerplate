@@ -1,29 +1,25 @@
-Вот обновлённая версия отчёта в формате **Markdown**, с добавленной прямой ссылкой на твой App Service:
+## Завдання: Деплой у Azure App Service через GitHub Actions
 
----
+**Опис виконаного завдання:**
 
-## Задание: Деплой в Azure App Service через GitHub Actions
+### ✅ 1. Створення інфраструктури в Azure
 
-**Описание выполненного задания:**
+* У [порталі Azure](https://portal.azure.com/) створено **Resource Group** з назвою `My_Rg`.
+* У межах ресурсної групи створено **App Service** з назвою [`my-web-app-labb-9`](https://portal.azure.com/#@andreyvoloshin111gmail.onmicrosoft.com/resource/subscriptions/f6acd7b4-cc8b-41de-8dd2-01d6bf26140f/resourceGroups/My_Rg/providers/Microsoft.Web/sites/my-web-app-labb-9/appServices):
 
-### ✅ 1. Создание инфраструктуры в Azure
+  * Тип розгортання: *Docker контейнер* (опція "Deploy container instead of code").
+  * Обрано план **Free (F1)**.
 
-* В [портале Azure](https://portal.azure.com/) создана **Resource Group** с именем `My_Rg`.
-* Внутри ресурсной группы создан **App Service** с именем [`my-web-app-labb-9`](https://portal.azure.com/#@andreyvoloshin111gmail.onmicrosoft.com/resource/subscriptions/f6acd7b4-cc8b-41de-8dd2-01d6bf26140f/resourceGroups/My_Rg/providers/Microsoft.Web/sites/my-web-app-labb-9/appServices):
+### ✅ 2. Створення Azure Service Principal
 
-  * Тип деплоя: *Docker контейнер* (опция "Deploy container instead of code").
-  * План: **Free (F1)**.
-
-### ✅ 2. Создание Azure Service Principal
-
-* Открыт [Azure Cloud Shell (Bash)](https://shell.azure.com/bash).
-* Выполнена команда:
+* Відкрито [Azure Cloud Shell (Bash)](https://shell.azure.com/bash).
+* Виконано команду:
 
   ```bash
   az ad sp create-for-rbac --name "myApp" --role contributor --scopes /subscriptions/<subscription_id>/resourceGroups/<resource_group_name> --json-auth
   ```
-* Идентификатор подписки найден через [Subscriptions](https://portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade).
-* Получен JSON-ответ:
+* Ідентифікатор підписки знайдено у розділі [Subscriptions](https://portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade).
+* Отримано JSON-вивід:
 
   ```json
   {
@@ -34,17 +30,17 @@
   }
   ```
 
-### ✅ 3. Добавление секрета в GitHub
+### ✅ 3. Додавання секрету в GitHub
 
-* В репозитории GitHub: **Settings → Secrets and variables → Actions**
-* Добавлен новый секрет:
+* У репозиторії GitHub: **Settings → Secrets and variables → Actions**
+* Додано новий секрет:
 
-  * **Name:** `AZURE_CREDENTIALS`
-  * **Value:** Весь JSON-ответ без пробелов и переносов строк.
+  * **Назва:** `AZURE_CREDENTIALS`
+  * **Значення:** повний JSON-вивід без пробілів та перенесень рядків.
 
-### ✅ 4. Обновление GitHub workflow
+### ✅ 4. Оновлення GitHub workflow
 
-Добавлены шаги в `workflow` для входа в Azure и деплоя в App Service:
+У наявний workflow додано кроки для входу в Azure та деплою в App Service:
 
 ```yaml
 - name: Logging into Azure
@@ -59,11 +55,11 @@
     images: ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:latest
 ```
 
-### ✅ 5. Запуск workflow и проверка
+### ✅ 5. Запуск workflow та перевірка
 
-* Workflow успешно завершился.
-* В логах найден URL, начинающийся с `App Service Application Url`.
-* При переходе по ссылке открывается развернутая фронтенд-страница из Docker-образа.
-* [Проверка в портале Azure](https://portal.azure.com/#@andreyvoloshin111gmail.onmicrosoft.com/resource/subscriptions/f6acd7b4-cc8b-41de-8dd2-01d6bf26140f/resourceGroups/My_Rg/providers/Microsoft.Web/sites/my-web-app-labb-9/appServices) подтверждает, что приложение успешно работает.
+* Workflow успішно завершився.
+* У логах знайдено URL, що починається з `App Service Application Url`.
+* Перехід за посиланням відкриває розгорнуту фронтенд-сторінку з Docker-образу.
+* [Перевірка в Azure Portal](https://portal.azure.com/#@andreyvoloshin111gmail.onmicrosoft.com/resource/subscriptions/f6acd7b4-cc8b-41de-8dd2-01d6bf26140f/resourceGroups/My_Rg/providers/Microsoft.Web/sites/my-web-app-labb-9/appServices) підтверджує, що застосунок працює успішно.
 
 ---
